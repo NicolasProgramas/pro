@@ -1,0 +1,50 @@
+package juego;
+
+import java.awt.Image;
+import entorno.Entorno;
+import entorno.Herramientas;
+
+public class Bloque {
+    private double x;
+    private double y;
+    private double ancho;
+    private double alto;
+    private boolean destructible;
+    private Image imagDestructible;
+    private Image imagIndestructible;
+
+    public Bloque(double x, double y, double ancho, double alto, boolean destructible, Image imagDestructible, Image imagIndestructible) {
+        this.x = x;
+        this.y = y;
+        this.ancho = ancho;
+        this.alto = alto;
+        this.destructible = destructible;
+        this.imagDestructible = imagDestructible;
+        this.imagIndestructible = imagIndestructible;
+    }
+
+    public static Bloque crearBloque(double x, double y, boolean destructible) {
+        double ancho = 50;
+        double alto = 50;
+        Image imagDestructible = Herramientas.cargarImagen("ladrillo comun.png");
+        Image imagIndestructible = Herramientas.cargarImagen("ladrillo indes.png");
+
+        return new Bloque(x, y, ancho, alto, destructible, imagDestructible, imagIndestructible);
+    }
+
+    public void dibujar(Entorno entorno) {
+        if (this.destructible) {
+            entorno.dibujarImagen(imagDestructible, x, y, 0, 1);
+        } else {
+            entorno.dibujarImagen(imagIndestructible, x, y, 0, 1);
+        }
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+}
