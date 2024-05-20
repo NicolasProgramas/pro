@@ -1,0 +1,21 @@
+package juego;
+
+import java.awt.Image;
+
+import entorno.Entorno;
+import entorno.Herramientas;
+
+public class Fondo {
+	private static Image imagen;
+    private static int x;
+    private	static int y;
+    
+    public Fondo(String rutaImagen, int x, int y) {
+        Fondo.imagen = Herramientas.cargarImagen(rutaImagen);
+        Fondo.x = x;
+        Fondo.y = y;
+    }
+	public void dibujar(Entorno entorno) {
+        entorno.dibujarImagen(imagen, x, y, 0);
+    }
+}
