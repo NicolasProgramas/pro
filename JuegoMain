@@ -1,0 +1,40 @@
+package juego;
+
+import entorno.Entorno;
+
+public class Piso {
+    private Bloque[] bloques;
+    private int cantBloques;
+    private double yInicio;
+
+    public Piso(int cantBloques, double yInicio) {
+        this.cantBloques = cantBloques;
+        this.bloques = new Bloque[cantBloques];
+        this.yInicio = yInicio;
+        crearPiso();
+    }
+
+    public void crearPiso() {
+        double xInicio = 25; // Coordenada X inicial
+        double anchoBloque = 50;
+
+        for (int i = 0; i < cantBloques; i++) {
+            double x = xInicio + i * anchoBloque;
+            bloques[i] = Bloque.crearBloque(x, yInicio, false); // Crear bloques indestructibles
+        }
+    }
+
+    public void dibujar(Entorno entorno) {
+        for (Bloque bloque : bloques) {
+            bloque.dibujar(entorno);
+        }
+    }
+
+    public Bloque[] getBloques() {
+        return bloques;
+    }
+
+    public double getYInicio() {
+        return yInicio;
+    }
+}
