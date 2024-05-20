@@ -1,40 +1,47 @@
 package juego;
 
 import entorno.Entorno;
+import entorno.InterfaceJuego;
 
-public class Piso {
-    private Bloque[] bloques;
-    private int cantBloques;
-    private double yInicio;
+public class JuegoMain extends InterfaceJuego {
+    private Entorno entorno;
+    private Fondo fondo;
+    private Princesa princesa;
+    private Piso pisoBase;
 
-    public Piso(int cantBloques, double yInicio) {
-        this.cantBloques = cantBloques;
-        this.bloques = new Bloque[cantBloques];
-        this.yInicio = yInicio;
-        crearPiso();
+    public JuegoMain() {
+        this.entorno = new Entorno(this, "Super Elizabeth Sis, Volcano Edition", 800, 600);
+        this.fondo = new Fondo("fondo.png", 400, 300);
+
+        // Crear el piso base
+        this.pisoBase = new Piso(16, 558); // Piso inferior, completamente indestructible
+
+        // Ajustar la altura inicial de la princesa
+        this.princesa = new Princesa(400, pisoBase.getYInicio() - 55, 2.0); // Ajustar la posición inicial de la princesa para que esté justo encima del piso
+
+        this.entorno.iniciar();
     }
 
-    public void crearPiso() {
-        double xInicio = 25; // Coordenada X inicial
-        double anchoBloque = 50;
+    public void tick() {
+        fondo.dibujar(entorno);
+        princesa.dibujar(entorno);
 
-        for (int i = 0; i < cantBloques; i++) {
-            double x = xInicio + i * anchoBloque;
-            bloques[i] = Bloque.crearBloque(x, yInicio, false); // Crear bloques indestructibles
+        pisoBase.dibujar(entorno);
+
+        if (entorno.estaPresionada(entorno.TECLA_IZQUIERDA)) {
+            princesa.moverHaciaIzquierda(true);
+        } else {
+            princesa.moverHaciaIzquierda(false);
+        }
+
+        if (entorno.estaPresionada(entorno.TECLA_DERECHA)) {
+            princesa.moverHaciaDerecha(true);
+        } else {
+            princesa.moverHaciaDerecha(false);
         }
     }
 
-    public void dibujar(Entorno entorno) {
-        for (Bloque bloque : bloques) {
-            bloque.dibujar(entorno);
-        }
-    }
-
-    public Bloque[] getBloques() {
-        return bloques;
-    }
-
-    public double getYInicio() {
-        return yInicio;
+    public static void main(String[] args) {
+        JuegoMain juego = new JuegoMain();
     }
 }
