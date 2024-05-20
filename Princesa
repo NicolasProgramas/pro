@@ -1,1 +1,62 @@
+package juego;
+
+import java.awt.Image;
+import entorno.Entorno;
+import entorno.Herramientas;
+
+public class Princesa {
+    private double x;
+    private double y;
+    private double velocidad;
+    private double angulo;
+    private String direccion;
+    private Image prinderecha;
+    private Image prinizquierda;
+    private boolean teclaIzquierdaPresionada;
+    private boolean teclaDerechaPresionada;
+
+    public Princesa(int x, double y, double velocidad) {
+        this.x = x;
+        this.y = y;
+        this.velocidad = velocidad;
+        this.angulo = 0;
+        this.prinderecha = Herramientas.cargarImagen("princesaderecha.png");
+        this.prinizquierda = Herramientas.cargarImagen("princesaizquierda.png");
+        this.direccion = "";
+        this.teclaIzquierdaPresionada = false;
+        this.teclaDerechaPresionada = false;
+    }
+
+    public void teclaIzquierdaPresionada(boolean presionada) {
+        this.teclaIzquierdaPresionada = presionada;
+    }
+
+    public void teclaDerechaPresionada(boolean presionada) {
+        this.teclaDerechaPresionada = presionada;
+    }
+
+    public void moverHaciaIzquierda(boolean presionada) {
+        teclaIzquierdaPresionada = presionada;
+        if (presionada) {
+            x -= velocidad;
+            direccion = "izquierda";
+        }
+    }
+
+    public void moverHaciaDerecha(boolean presionada) {
+        teclaDerechaPresionada = presionada;
+        if (presionada) {
+            x += velocidad;
+            direccion = "derecha";
+        }
+    }
+
+    public void dibujar(Entorno entorno) {
+        if (teclaIzquierdaPresionada) {
+            entorno.dibujarImagen(prinizquierda, x, y, angulo, 1);
+        } else {
+            entorno.dibujarImagen(prinderecha, x, y, angulo, 1);
+        }
+    }
+}
 
